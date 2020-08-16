@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+<!--    <nav-link :url="https://www.baidu.com/">-->
+        <nav-link :url="url">
+<!--        个人中心  //优先于下面的关于我们-->
+<!--        {{name}}-->
+            //如何连接插槽名字
+            <template v-slot:header>这是header</template>
+<!--        <template v-slot:main>这是main</template>-->
+            <template>这是main</template>         //没有命名就不会显示，默认命名是default,<slot></slot>就会显示这个
+            <template v-slot:footer>这是footer</template>
+        </nav-link>
+    </div>
+</body>
+</html>
+<!--必须联网-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="./vue.js"></script>
+
+<script>
+    Vue.component('nav-link', {
+        props:['url'],
+        template:
+        <a v-bind: href="url">
+            <div>
+                <slot name="header">关于我们</slot>  //个人中心会显示在这个插槽
+            </div>
+            <div>
+                <slot name="main"></slot>
+            </div>
+            <div>
+                <slot name="footer"></slot>
+            </div>
+        </a>
+        ,
+        //报错，因为插槽只能用父组件的数据
+        data:function(){
+            return{
+                names:"教育"
+            }
+        }
+    })
+
+    new Vue({
+        el: "#app",
+        data: {
+            url:"https://www.baidu.com/",
+            name:"逻辑"
+        }
+    })
+</script>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <container>
+            <template v-slot:header="headerProps">
+                这是头部区域
+                {{headerProps.navs}}
+            </template>
+            <template v-slot:footer="footerProps">
+                这是底部区域
+                {{footerProps.address}}
+            </template>
+        </container>
+    </div>
+</body>
+</html>
+<!--必须联网-->
+<!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+<script src="./vue.js"></script>
+
+<script>
+    Vue.component('container',{
+        template:
+            <div>
+                <div>
+                    <slot name="header" :navs="navs"></slot>
+                </div>
+                <div>
+                    <slot name="footer" :address="address"></slot>
+                </div>
+            </div>
+        ,
+        data: function(){
+            return {
+                navs:['新闻', 'hao123', '地图'],
+                address: 'csc'
+            }
+        }
+    }）
+    new Vue({
+        el: "#app",
+    })
+
+</script>

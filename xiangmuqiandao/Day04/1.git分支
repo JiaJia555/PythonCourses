@@ -1,0 +1,53 @@
+1.创建分支
+git branch          列出所在分支
+git branch dev      创建新的分支
+git branch
+
+git checkout dev    切换分支到dev
+vim index.html      修改此文件，添加新功能商城开发
+cat index.html
+git add .
+git commit -m "商城开发"
+git log
+版本特别多按空格,q退出
+
+已经上线的v3有bug,需要修复
+git checkout master     切换到主线
+cat index.html          没有商城开发，因为分支之间做了代码隔离
+git checkout dev
+cat index.html
+
+git checkout master
+git branch bug
+git branch
+git checkout bug        切换到Bug分支
+vim index.html          修改文件bug解决
+cat index.html
+
+git add .                   提交Bug修复后的文件
+git commit -m "bug修复"
+git log                     只能看到bug分支和master的版本
+
+bug分支合并到master，V4
+git checkout master
+git merge bug
+cat index.html
+git branch -d bug 删除bug分支
+
+开发商城功能，商城开发也合并到V4,会与bug有冲突，手动解决
+git branch
+git checkout dev
+vim index.html          商城开发100%
+git add.
+git commit -m "商城功能开发完成"
+git checkout master
+git merge dev           有冲突
+vim index.html          手动解决冲突，修改代码
+git add .
+git commit -m "解决冲突"
+cat index.html
+git log
+
+工作流:
+正式版线上版本(master)
+分支版本(dev/bug)

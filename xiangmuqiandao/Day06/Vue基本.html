@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!--    <input type="text">-->
+    <div id="app">
+        username:<p>{{username}}</p>
+        password:<p>{{password}}</p>
+<!--        {{demo({{username}})}},报错-->
+<!--        {{demo(username)}}-->
+<!--        <p @click="demo"></p>-->
+        <button @click="demo">按钮</button>
+    </div>
+</body>
+</html>
+<!--必须联网-->
+<!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+<script src="./vue.js"></script>
+
+<script>
+    new Vue({
+        el:"#app"
+        data: {
+            "username":"逻辑教育"，
+            "password": 123，
+        }，
+        methods:{
+            // demo: function(name){
+            //    return "晚上好," + this.name
+            // }
+            demo: function(){
+                //return "晚上好," + this.username
+                this.username = "lgcoder"
+            }
+        }
+    })
+</script>
+<!-- #是用来绑定id的-->
+<!--.是绑定class-->

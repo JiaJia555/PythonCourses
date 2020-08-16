@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>
+<!--必须联网-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+1.计算属性
+<body>
+    <div id="app">
+        <label>长:</label>
+<!--     v-model双向绑定, 简写v-model=""-->
+        <input type="number" name="length" v-model:value="length">
+        <label>宽:</label>
+        <input type="number" name="width" v-model:value="width">
+        <label>面积:</label>
+        <input type="number" readonly v-bind:value="area">
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data:{
+            length: 0,
+            width: 0
+        },
+        // 计算属性
+        computed:{
+            area:function(){        //=area(){
+                console.log(this.length, this.width)
+                return this.length*this.width
+            }
+        }
+    })
+</script>
+
+1.1计算属性的set
+<body>
+    <div id="app">
+        <label>省:</label>
+        <input type="text" v-model: value="province">
+    </div>
+    <div id="app">
+        <label>市:</label>
+        <input type="text" v-model: value="city">
+    </div>
+    <div id="app">
+        <label>区:</label>
+        <input type="text" v-model: value="district">
+    </div>
+    <div id="app">
+        <label>详细地址:</label>
+        <input type="text" v-model: value="address">
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data:{
+            province:"",
+            city:"",
+            district:""
+        }
+        computed:{
+            get:function(){
+                var result = ""
+                if(this.province){
+                    result= this.province+ "省"
+                }
+                if(this.city){
+                    result+= this.city+ "市"
+                }
+                if(this.district){
+                    result+= this.district+ "区"
+                }
+                return result
+            },
+            set:function(value){
+                console.log(value)
+                var reault = value.split(/省|市|区/)
+                console.log(result)
+                if(result && result.length > 0){
+                    this.province = result[0]
+                }
+                if(result && result.length > 1){
+                    this.city = result[1]
+                }
+                if(result && result.length > 2){
+                    this.district = result[2]
+                }
+            }
+        }
+    })
+
+
+2.监听属性
+<body>
+    <div id="app">
+        <label>搜索:</label>
+        <input type="text" v-model:value="keyword">
+        <p>结果:</p>
+        {{answer}}
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data:{
+            keyword:"",
+            answer:""
+        },
+        watch:{
+            keyword: function(newvalue, oldvalue){
+                console.log(newvalue);
+                console.log(oldvalue);
+                this.answer = "加载中..."
+                //定时器 函数几毫秒之后再执行
+                setTimeout(() => {
+                    this.answer = "搜索结果:" + newvalue
+                }, 1000);
+            }
+        }
+    })
+</script>
+
+
+
+
+
+
+
+
+
+

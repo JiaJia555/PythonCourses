@@ -1,0 +1,122 @@
+三.redis-Hash
+hash是一个键值对集合
+hash是一个string类型的field和value的映射表，hash特别适合存储对象
+
+1.hset/hget/hmset/hmget/hgetall/hdel
+
+设值/取值/设值多个值/取多个值/取全部值/删除值
+注意：设置值不能重复，会覆盖之前的赋值，没有索引
+
+hset user id 11
+hget user id
+hmset customer id 11 name juran age 26
+hmget customer id name age      只返回相应的值
+hgetall   customer              返回全部
+hdel user id name  删除id name
+hdel user * 没有此功能
+
+2.hlen
+
+求哈希长度
+hlen customer
+判断类型
+type user
+
+3.hexists key
+
+hexists ---- 在key里面的某个值
+存在返回1 ，不存在返回0
+
+4.hkeys/hvals
+
+hkeys students
+hvals students
+
+4.redis-set(不重复的)
+Set(集合)
+set是string类型的无序集合
+
+1.sadd/smembers/sismember
+
+sadd/smembers/sismember ---- 添加/查看集合/查看是否存在
+sadd set01 1 2 2 3 3  去掉重复添加
+smembers set01   得到set01
+sismember set01 1  如果存在返回1  不存在返回0
+
+2.scard
+
+scard ---- 获取集合里面的元素个数
+scard set01
+
+3.srem key value
+
+srem ---- 删除集合中元素
+srem set01 3
+SMEMBERS set01   3已经被删除掉
+
+4.srandmember key
+
+srandmembe ---- 随机出几个数
+sadd set02  1 2 3 4 5 6 7 8
+srandmember set02  2
+
+5.spop key
+
+spop ---- 随机出栈,会修改原集合
+spop set01
+
+6.smove key1 key2
+
+sadd set03 x y z
+smove set01 set03 2  将set01中的2 移动到set03中
+
+7.数学集合类
+
+sadd set01 1 2 3 4 5
+sadd set02 1 2 3 a b
+差集
+SDIFF set01 set02   返回 4 5 在第一个set中不在第二个set中
+交集
+SINTER set01 set02   返回 1 2 3
+并集
+SUNION set01 set02  返回set01 set02 中的值  去掉重复
+
+五.redis-Zset
+
+Zset(有序集合)
+
+1.zadd/zrange
+
+zadd zset01 60 v1 70 v2 80 v3 90 v4 100 v5
+zrange zset01 0 -1
+带分数返回   withscores
+
+2.zrangebyscore key start end
+
+zrangebyscore key start end----根据开始结束来取值
+zrangebyscore zset01 60 70
+zrangebyscore zset01 60 (90   表示不包含90
+zrangebyscore zset01  60 90  limit  1 2 从第一条开始(不包含第一个)截取2条/数据从1 limit从0开始
+
+
+3.zrem key
+
+zrem key value---- 某score下对应的value值,作用是删除元素
+zrem zset01 v1
+
+4.zcard/zcount key score 区间/zrank key values
+
+zcard   求zset01 总条数
+zcount  zset01 60 90  求60-90个数
+zrank   zset01  v2   返回1  返回对应下角标，从0开始
+
+备注：redis 切换数据库用select 1
+
+
+
+
+
+
+
+
+

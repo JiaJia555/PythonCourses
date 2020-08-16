@@ -1,0 +1,84 @@
+git --version
+git --help
+
+一.基本功能
+创建文件dbhot并初始化
+git init
+
+查看目录下的文件状态
+git status
+
+创建index.html,再次查看状态
+git status        (index.html报红，指新增或者原来修改的文件)
+
+git add index.html      (.指全部)
+git status          (index.html变绿色,指成功上传的文件)
+
+生成版本
+git commit -m 'v1'
+
+账号登陆
+git config --global user.email "17xxxxxxxx@qq.com"
+git config --global user.name "JiaJia555"
+
+查看登陆状态和文件版本
+git log
+
+二. 拓展新功能
+html文件新增短视频功能
+git status
+git add .
+git status
+git commit -m "v2短视频"
+git status
+git log
+
+git 三大区域
+工作区:已控制的文件/新增文件和变动的颜色
+暂存区
+版本库
+
+三. 开发新功能:约饭功能
+git status
+git add.
+git commit -m "v3约饭功能"
+git log
+
+四. 某种原因，该功能必须下线
+回滚之前的版本
+git reset --hard 版本号
+git reset --hard 9bdd4e8db5551e6fc9a61844a89dea0e8880a5a5
+git log
+
+五. 恢复之前的版本
+git reflog
+git reset --hard b98362a
+git log
+
+恢复修改的文件
+修改html约饭功能再次上线
+git status
+git checkout -- index.html
+git status
+
+暂存区到工作区
+修改html约饭功能再次上线
+git status
+git add.
+git reset HEAD index.html   变成红色
+git status
+git checkout -- index.html  恢复到修改前的文件
+git status
+
+
+
+
+
+
+
+
+
+
+
+
+

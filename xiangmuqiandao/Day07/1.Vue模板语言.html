@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<!--1. 文本-->
+<!--在html中通过{{}}（双大括号）中可以把Vue对象中的数据插入到网页中。并且只要Vue对象上对应的值发生改变了，那么html中双大括号中的值也会立马改变。-->
+<!--v-是绑定的意思-->
+<!--如果在html的{{}}中，第一次渲染完成后，不想要跟着后期数据的更改而更改，那么可以使用v-once指令来实现。-->
+<div id="app">
+    <p v-once>{{username}}</p>
+    <button v-on:click="change">点击修改</button>
+</div>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            "username": "逻辑教育"
+        },
+        methods: {
+            change: function(){
+                this.username = 'China';
+            }
+        }
+    });
+</script>
+
+<!--2.显示原生的html-->
+<!--Vue对象中，后台可能返回一段原生的html代码，需要渲染出来，如果直接通过{{}}渲染，会把这个html代码当做字符串。这时候我们就可以通过v-html指令来实现-->
+<!--data 里面的"code"-->
+<div id="app">
+<!--    <p>{{code}}</p>这样会直接把下面内容当成字符串显示-->
+    <p v-html="code">{{code}}</p>
+    <div v-html="code"></div>
+</div>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            "code": "<a href='https://www.baidu.com/'>百度一下，你就知道！</a>"
+        }
+    });
+</script>
+
+3.属性绑定
+v-bind: 在html元素的属性上绑定我们Vue对象中的变量
+<div id="app">
+    <img class="{{classname}}">你好，世界</p>
+<!--    <img v-bind:src="{{imagesrc}}" alt="">属性，报错，方法不需要花括号，文本需要-->
+<!--    :是v-bind:缩写-->
+    <img v-bind:src="imagesrc" alt="">
+</div>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            "classname": "pclass"
+            "imgsrc": "https://www.baidu.com/img/bd_logo1.png"
+
+        },
+    });
+</script>
+

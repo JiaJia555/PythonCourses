@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue模板语法</title>
+    <style>
+        .title{
+            font-size: 20px;
+            color: red;
+        }
+        .main_title{
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+    <p class="title">中国，加油</p>
+
+    <div id="app">
+<!--    <p v-bind: class="class1">中国加油！！！</p>-->
+        <p v-bind: class="[class1,class2]">中国加油！！！</p>
+<!--    <p v-bind: class="[title, main_title]">中国加油！！！</p>报错-->
+<!--    <p v-bind: class="[class1]">中国加油！！！</p>与下面的class1相对应-->
+        <p v-bind: class="{title:class1, main_title:class2}">hello world</p>
+<!--    <p v-bind: style="{background-color:background}">逻辑教育</p>报错，需要加引号-->
+<!--    <p v-bind: style="{'background-color' :background}">逻辑教育</p>-->
+        <p v-bind: style="{backgroundColor:background}">逻辑教育</p>
+
+        <p: style="pstyle">逻辑教育</p:>  //这样就可以把属性统一写在data里面
+    </div>
+</body>
+</html>
+<!--必须联网-->
+<!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+
+<script src="./vue.js"></script>
+
+<script>
+   new Vue({
+        el: "#app",
+        data: {
+            // class1: "title main_title"，
+            // class1: "title",
+            // class2: "main_title"，
+            class1:true,
+            class2:true,
+            background: 'red',      // red不加引号会被当作变量
+            pstyle:{
+                'background-color':'red',
+                'font-size': "20px"
+        }
+</script>
+
+4.属性绑定Class和Style
+4.1绑定class--通过数组
+<div id="app">
+    <p v-bind:class="[classname1,classname2]">你好，世界</p>
+</div>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            classname1: "pcolor",
+            classname2: "pfont"
+        }
+    });
+</script>
+
+4.2 绑定class-通过对象
+<p v-bind: class="{title:class1, main_title:class2}">hello world</p>
+data: {
+    class1:true,
+    class2:true,
+    }
+true就是显示的意思，false就是不显示
+如果是main-title,报错可以直接在v-bind这行给加引号
+eg:
+<div id="app">
+    <p v-bind:class="{pcolor:isColor,pfont:isFont}">你好，世界</p>
+</div>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            isColor: true,
+            isFont: true
+        }
+    });
+</script>
+
+5.绑定Style
+5.1 用对象的方式
+<!--读取对应样式的值-->
+<li :style="{backgroundColor:pBgColor,fontSize:pFontSize}">首页</li>
+<!--或者是直接读取整个字符串-->
+<li :style="liStyle">首页</li>
+
+<p v-bind: style="{'backgroundcolor':background}"></p>
+data: background: 'red'
+
+5.2 通过数组
+<p v-bind:style="[pclass1, pclass2]">加油，中国</p>
+data: pclass1:{
+            backgroundColor: 'rgb(255, 255, 51)',
+            fontSize: '22px'
+        },
+        pclass2: {
+            'font-weight': '800'        //数字可以不写引号
+
+        }
+eg:
+<li :style="[liStyle1,liStyle2]">首页</li>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            liStyle: {
+            backgroundColor: "red",
+            fontSize: "14px"
+        },
+        liStyle2: {
+            fontWeight: 800         // 驼峰命名
+        }
+        }
+    })
+</script>
+
+6. 使用JavaScript表达式
+<p V-bind: style="{color: color? 'red':'blue'}">{{username.split(" ").reverse().join(" ")}}</p>
+<!-- 三元运算符   表达式？表达式1:表达式2 -->
+data:  "hello world"
+        color: false
+
+eg:
+<div id="app">
+  <p v-bind:style="{color:color?'red':'blue'}">{{username.split(" ").reverse().join(" ")}}</p>
+</div>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            username: "luoji ketang",
+            color: false    // 0，1
+        }
+    });
+</script>
+
+7. 条件判断
+<body>
+    <!-- div#app -->
+    <div id="app">
+<!--        <p v-if="weather =='summer' ">今天去约女神</p>-->
+<!--        <p v-else-if="weather == 'rain' ">今天在家打游戏</p>-->
+<!--        <p v-else>今天吃火锅</p>-->
+
+        <template v-if="age < 18">
+            <p>上网</p>
+            <p>逃学</p>
+        </template>
+
+        <template v-else-if="age >= 18 && age <25">
+            <p>找工作</p>
+            <p>找女朋友</p>
+        </template>
+
+        <template v-else>
+            <p>工资多少</p>
+            <p>结婚</p>
+        </template>
+用户登录：
+        <template v-if="loginType=='username'">
+            <label for="">用户名</label>
+            <input type="text" placeholder="用户名" key="username">
+        </template>
+        <template v-else-if="loginType=='email'">
+            <label for="">邮箱</label>
+            <input type="text" placeholder="邮箱" key="email">
+        </template>
+        <button v-on:click="changeLoginType">切换登陆类型</button>
+<!--        <button @click></button>-->
+    </div>
+    <!-- div.app -->
+    <!--div class="app"></div -->
+    <!--div*3 生成3个div-->
+    <!--key可以任意写字符串和整型，推荐写标题-->
+</body>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            weather: "summer",
+            // weather: "rain"
+            age: 18/17/33
+            loginType: 'email'
+        },
+        methods: {
+            changeLoginType:function(){
+                this.loginType = this.loginType=='username'? 'email':'username'
+            }
+        }
+    })
+
+</script>
+
+8.循环
+<div>
+    <table>
+        <tr>
+            <th>序号</th>
+            <th>标题</th>
+            <th>作者</th>
+        </tr v-for="(book,index) in books">
+<!--        第一个位置 数据 第二个位置 索引-->
+<!--    </tr v-for="(index,book) in books">-->
+<!--        <td>{{book+1}}</td>-->
+<!--        <td>{{index.title}}</td>-->
+<!--        <td>{{index.author}}</td>-->
+            <td>{{index+1}}</td>
+            <td>{{book,title}}</td>
+            <td>{{book.author}}</td>
+        <tr>
+
+        </tr>
+    </table>
+</div>
+
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            books:[
+                {
+                    'title': 'python',
+                    'author': '龟叔'
+                }，
+                {
+                    'title': 'java',
+                    'author': 'xxx1'
+                }，
+                {
+                    'title': 'PHP',
+                    'author': 'xxx2'
+                }，
+                {
+                    'title': 'C++',
+                    'author': 'xxx3'
+                }，
+            ],
+</script>
+
+8.1 循环对象
+        <div v-for="(value,key) in person">
+            {{key}}:{{value}}
+        </div>
+
+        data:{
+            person: {
+                "username":"juran"
+                "age":18
+                "address": "csc"
+                }
+            }
+

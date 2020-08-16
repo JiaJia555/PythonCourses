@@ -1,0 +1,90 @@
+1. github使用
+注册账号
+创建仓库
+推送代码
+git项目推送
+https://blog.csdn.net/aiming66/article/details/81051428
+
+ctrl + l清空
+创建仓库:dbhot
+远程仓库的地址:https://github.com/JiaJia555/dbhot.git
+git init
+git clone
+git 在命令行创建新的仓库origin
+git remote add origin https://github.com/JiaJia555/dbhot.git
+git remote add origin https://github.com/JiaJia555/PycharmProjects.git
+git add .
+git commit -m
+推送代码
+git push -u origin master
+git push -u origin dev              把dev分支推上去 -u可以省略
+
+公司
+克隆代码
+git clone https://github.com/JiaJia555/dbhot.git    仓库地址
+cd dbhot/
+ls
+cat index.html
+git checkout dev
+cat index.html              分支代码与主线代码不一致
+git merge master
+cat index.html
+
+1. 在公司开发a功能
+touch a.py              创建新文件，开发新功能
+git add .
+git commit -m "在公司开发的a功能"
+git push origin dev     推送到github
+ls
+
+4. 在公司获取开发代码
+git pull origin dev
+ls
+git checkout master         切换到主线
+git merge dev               合并分支
+git push origin master      功能可以上线
+
+家dbhot
+2. 下班回家把公司代码拉下来
+cat index.html
+git checkout dev
+git pull -u origin dev
+ls              发现a.py
+
+3. 在家开发a1新功能
+touch a1.py     在家开发a1新功能
+git add .
+git commit -m "在家开发的a1功能"
+git push origin dev     推送到github
+
+
+eg.公司下班忘记提交代码
+公司：
+git checkout dev
+vim a1.py      添加：在公司开发了一半的功能
+cat a1.py
+git add .
+git status
+git commit -m "女神约饭"
+
+家：
+git pull origin dev
+cat a1.py               公司没有提交，这里没有东西
+vim a1.py               开发了其他功能
+vim a2.py               编写了其他功能
+git add .
+git commit -m "在家编写的其他功能"
+git push origin dev
+
+公司:
+git pull origin dev     a1冲突
+ls
+vim a1.py               手动解决冲突
+git add .
+git commit -m "合并之后解决冲突"
+git push origin dev
+cat a1.py
+
+回到家之后
+git pull origin dev
+cat a1.py

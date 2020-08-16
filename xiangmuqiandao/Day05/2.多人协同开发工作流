@@ -1,0 +1,209 @@
+创建原始版本并上线
+cd ..
+mkdir person
+cd person/
+mkdir dbhot
+ls
+git init
+touch app.py
+git status
+git add .
+git commit -m "东北热基本版本"
+git status
+
+github邀请编辑
+settings-manage access
+
+1. 创建组织和初始项目版本:New organization   lgcoderjiajia/dbhot     -仓库
+git remote add origin https://github.com/lgcoderjiajia/dbhot.git       推送本地项目
+git push -u origin master
+git status
+git tag -a v1 -m "first version"
+git push origin --tags
+git push origin dev
+
+2. 邀请成员(person/dbhot)
+git checkout -b dev         创建dev分支并切换到该分支
+git branch
+organzitions-dbhot-settings-Manage access-invite members(write)
+ls
+cd ..
+
+本地创建文件夹teamA,打开命令行
+同学A:
+mkdir brother
+cd brother/         也可命令行创建
+git clone https://github.com/lgcoderjiajia/dbhot.git
+ls
+cd dbhot/
+ls
+git branch
+git checkout dev
+git checkout -b ddz
+git branch
+touch ddz.py
+git add .
+git commit -m "斗地主开发30%"
+git push origin ddz
+vim ddz.py      开发完成
+git add .
+git commit -m "ddz功能开发100%"
+git push origin ddz
+
+添加规则
+settings--branches--add rule--dev--勾选第一个
+
+codereview:
+点击New pull request，base:dev, compare:ddz,填写备注。create pull request--merge--confirm
+
+testA:
+git clone git clone https://github.com/lgcoderjiajia/dbhot.git
+ls
+cd dbhot/
+git checkout dev
+ls
+cat ddz.py
+
+person/dbhot
+ls
+git pull origin dev
+ls
+cat ddz.py
+git checkout master
+git merge dev
+ls
+git push origin master
+git tag -a v2 -m "v2功能"
+git push origin --tags
+
+提交开源代码:
+git clone +开源文件
+ls
+cd flask/
+touch bug.py
+git add .
+git commit -m "修复了...bug"
+git push origin master
+New pull request--create pull request
+
+bug解决
+git checkout master
+git branch
+git branch -d ddz  (D)
+git branch(master)
+ls
+pwd
+git checkout -b dev
+ls
+git checkout -b ddz
+git branch
+touch ddz.py
+git add .
+git commit -m "斗地主功能开发20%"
+git push origin ddz     已经推过一次了所以报错
+
+总结
+1.本地创建目录
+mkdir
+项目开发目录
+mk dir
+东北热的基本版本
+git init
+touch app.py
+git add .
+git commit -m "东北热基本版本"
+
+创建组织
+组织名字
+邀请成员
+创建组织下的仓库
+
+推送到组织下面的仓库
+git remote add origin xxx
+git push origin master
+
+版本号 xxx ->v1
+git tag -a v1 -m "xx"           给版本打标签
+git push origin -tags           将标签推送上去
+
+多人协同开发之邀请成员
+创建dev分支，并推送到github
+git branch dev
+git checkout dev
+git push origin dev
+到项目中邀请成员，写权限
+（成员第一次开发）
+mkdir xxx
+git clone xxxx仓库地址
+git checkout -b ddz
+touch ddz.py
+git add .
+git commit -m "xxx"
+git push origin ddz
+
+Codereview
+settings--Branches--add rules(写dev),勾选第一个）--create
+
+成员点击:New pull request
+代码合并到dev分支当中才检查代码
+
+ddz功能开发
+1.完成了什么功能
+2. 完成了xxx
+---create pull request
+回到主管页面
+confirm
+
+复习：
+建立新的organization lgcoderjiajia, repository叫project
+mkdir pro
+cd pro/
+git init
+touch app.py
+git add .
+git commit -m "基本版本"
+git remote add origin https://github.com/lgcoderjiajia/project.git
+git push -u origin master
+git branch dev
+git checkout dev
+git push origin dev
+ls
+
+mkdir brother
+cd brother/
+git clone http://
+cd project/
+ls
+git checkout -b ddz
+touch ddz.py
+git add .
+git commit -m "ddz功能开发20%"
+git push origin ddz
+
+pro打开命令行
+ls
+git pull origin dev         把codereview拉在本地
+ls                          有ddz文本了
+cat ddz.py
+
+测试：releases
+teamleader:
+git checkout master
+git checkout -b release
+git push origin release
+git checkout master
+git merge release           release和master合并上线
+git checkout dev                 dev和release合并
+git merge release               dev版本同步
+git checkout master
+git branch
+git push origin master
+ddz文件也要推上去到master
+
+
+
+
+
+
+
+

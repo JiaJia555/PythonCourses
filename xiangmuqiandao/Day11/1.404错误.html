@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+</body>
+</html>
+<!--https://unpkg.com/vue-router@3.1.6/dist/vue-router.js%22-->
+<script>
+    var index = Vue.extend({template:""})
+    var profile
+    mouted(){
+        console.log(this.$route)
+        console.log(this.$route.params.userid)
+        if(this.$route.params.userid!='123'){
+        }
+    var notfind =Vue.extend({ template:"<p>您要的页面不存在</p>"})
+    var router = new VueRouter({
+        routes:[
+            {path:"/",component:index},
+            {path:"/profile/:userid", component:profile},
+        ]
+    })
+    new Vue({
+        el:"app",
+        router:router
+    })
+</script>

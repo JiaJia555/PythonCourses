@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{count}}</p>
+        <button v-on: click="count+=1">加</button>
+        <button @click="sub(2, $event)" value="jiajia" name="hello world">减</button>
+    </div>
+</body>
+</html>
+<!--必须联网-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+1.事件绑定
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            count:0
+            }
+        methods:{
+            sub(value, event){          //=sub:dunction(), event是形参，叫什么都行
+                alert(123)      //弹出123
+                console.log(event.target.value)     //打印属性
+                console.log(event.target.name)
+                this.count -= value
+            }
+        }
+    })
+</script>
+
+2.传入evevnt参数

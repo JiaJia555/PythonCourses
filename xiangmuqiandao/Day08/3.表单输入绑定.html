@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>
+<!--必须联网-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+1.表单输入绑定
+<body>
+    <div id="app">
+        <!--<input type="text" v-model:value="meaage" placeholder="请输入...">-->
+        //1 文本域
+<!--    <textarea name="" v-model:value="message" cols="30" rows="10"></textarea>-->
+        // 2 复选框 checkbox绑定
+        <input type="checkbox" value="Jack" v-model="checkedNames"
+        <label for="jack">Jack</label>
+        <input type="checkbox"  value="John" v-model="checkedNames">
+        <label for="john">John</label>
+        <input type="checkbox"  value="Mike" v-model="checkedNames">
+        <label for="mike">Mike</label>
+        <br>
+        //数组
+        <span>Checked names: {{ checkedNames }}</span>
+        <p>输入的内容是:{{message}}</p>
+        //3 单选框radio绑定
+        <input type="radio" value="男" v-model="gender">
+        <label>男</label>
+        <br>
+        <input type="radio" value="女" v-model="gender">
+        <label>女</label>
+        <br>
+        <span>Picked: {{ gender }}</span>
+        // 4. select 绑定
+        <select v-model="selected">
+            <option disabled value="">请选择</option>      //disabled就是不能选择的意思
+            # 如果有value值 选择的就是value值
+            <option value="1">A</option> //有value就显示value值
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>Selected: {{ selected }}</span>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data:{
+            message:"",
+            checkedNames: [],
+            gender:"",
+            selected:""
+        }
+    })
+</script>
+
+2.修饰符
+
+.lazy把原先同步的变成之后显示
+简写v-model.lazy
+<body>
+    <div id="app">
+    <input type="text" v-model:value.lazy="meaage" placeholder="请输入...">
+     </div>
+</body>
+
+<script>
+    new Vue({
+        el: "#app",
+        data:{
+            message:""
+        }
+    })
+</script>
+
+.number自动将用户的输入值转为数值类型，给v-model添加number修饰符
+<body>
+    <div id="app">
+        <input type="text" v-model.number="number">
+
+        <input type="text"v-model.trim="msg">
+        <p>{{msg}}</p>
+     </div>
+</body>
+
+<script>
+    new Vue({
+        el: "#app",
+        data:{
+            number:"",
+            msg:""
+        },
+        watch:{
+            msg: function(newvalue, oldvalue){
+                console.log(this.msg);
+            }
+        }
+    })
+</script>
+
+.trim自动过滤用户输入的首尾空白字符
+

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <button-count></button-count>
+        <button-count></button-count>
+    </div>
+</body>
+</html>
+<!--必须联网-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<script>
+    //自定义组件button-count标签名字
+    Vue.component('button-count',{
+        template: '<button @click="count+1">点击了{{count}}次</button>'
+        data: function(){
+            return {
+            count: 0
+            }
+        }
+    })
+    new Vue({
+        el: "#app",
+        data:{
+        }
+    })
+</script>
+
+2.给组件添加属性
+<body>
+    <div id="app">
+        <book-list v-bind:books="books"> </book-list>
+    </div>
+</body>
+
+<script>
+    //自定义组件button-count标签名字
+    Vue.component('book-list',{
+        //给组件添加属性
+        props:["books"],
+        //单引号不能显示多行，要用``
+        template: `
+        <div>
+            <table>
+                <tr>
+                    <th>序号</th>
+                    <th>标题</th>
+                </tr>
+                <tr v-for="(book, index) in books" >
+                    <td>{{index+1}}</td>
+                    <td>{{book.title}}</td>
+                </tr>
+            </table>
+        <div>123</div>      //会报错，单一根元素
+        </div>              //无报错
+        `
+    })
+    new Vue({
+        el: "#app",
+        data:{
+            books:[
+                {"Title":"Python", "id":1},
+                {"Title":"Java", "id":2},
+                {"Title":"PHP", "id":3},
+            ]
+        }
+    })
+</script>
+
+3.子组件事件和传递事件到父组件
+<body>
+    <div id="app">
+        <book-list v-for="book in books" v-bind:book="book"
+         @check-changed="checks"></book-list>
+
+        <div v-for="cbook in componentbook">
+            {{cbook.title}}
+        </div>
+    </div>
+</body>
+
+<script>
+    //子组件
+    Vue.component('book-list',{
+        props:['book']
+        template:
+        <div>
+            <span>{{book.title}}</span>
+            <input type="checkbox" @click="Oncheck">
+        </div>
+        ,
+        methods:{
+            Oncheck: function(){
+                this.$emit('check-changed',this.book)
+            }
+        }
+    })
+    //父组件
+    new Vue({
+        el: "#app",
+        data:{
+            books:[
+                {"Title":"Python", "id":1},
+                {"Title":"Java", "id":2},
+                {"Title":"PHP", "id":3},
+            ],
+            componentbook: []
+        },
+        methods:{
+            checks:function(book){
+                console.log(book)
+                // indexof >0
+                var index = this.componentbook.indexof(book)
+                if(index >=0){
+                    // pop每次弹出最后一个，不符合需求
+                    this.componentbook.splice(index,1)
+                }else{
+                    this.componentbook.push(book)
+                }
+
+            }
+        }
+    })
+</script>
+
+4. 自定义组件v-model
+<body>
+    <div id="app">
+<!--    <stepper v-bind: count="goods_count"></stepper>-->
+        <stepper v-model: value="goods_count"></stepper>
+    </div>
+</body>
+
+<script>
+    //计步器
+    Vue.component('steeper',{
+        props: ['count'],
+        model:{
+            //event代表触发v-model的行为
+            event:"count-changed",
+            prop: 'count'
+        },
+        template:
+        <div>
+            <button @click="sub">-</button>
+            <span>{{count}}</span>
+            <button @click="add">+</button>
+        </div>
+        ,
+        methods:{
+            sub:function(){
+                this.$emit('count-changed',this.count-1)
+            },
+            add:function(){
+                this.$emit('count-changed',this.count+1)
+            }
+        }
+    })
+    //父组件
+    new Vue({
+        el: "#app",
+        data:{
+            goods_count:0
+        },
+    })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

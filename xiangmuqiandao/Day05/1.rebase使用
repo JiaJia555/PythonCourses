@@ -1,0 +1,34 @@
+1. company
+git log
+cd ..
+ls
+mkdir pro_rebase
+cd pro_rebase/
+
+git init
+touch 1.py
+git add .
+git commmit -m "v1"
+git log
+touch 2.py
+git add .
+git commit -m "v2"
+git log
+ctrl+l清零
+touch 3.py
+git add .
+git commit -m "v3"
+touch 4.py
+git add .
+git commit -m "v4"
+git log
+
+版本合并
+git rebase -i +版本号
+git rebase -i HEAD~3 数字, 最近的3条
+pick 改成s 保存退出
+v1 &v2 &v3 保存并退出
+git log
+
+注释：rebase也可以做忘记推送代码的解决方案
+

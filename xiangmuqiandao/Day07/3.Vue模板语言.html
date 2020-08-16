@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id ="app"></div>
+</body>
+</html>
+<!--必须联网-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+9. 保持状态
+<body>
+    <div id ="app">
+        <div v-for="book in books" v-bind:key="book">
+            <label>{{book}}</label>
+            <input type="text" v-bind:placeholder="book">
+        </div>
+        <button @click="changeBooks">更换图书</button>      //图书顺序发生变化
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            books: ['python','Jave', 'PHP', 'C++']
+        },
+        methods: {
+            changeBooks:function(){
+                this.books.sort(function(a,b){
+                    // 返回正true负数false来进行排序
+                    return 5- Math.random()*10
+                })
+            }
+        }
+</script>
+
+10.触发视图更新
+<body>
+    <div id ="app">
+        <div v-for="book in books">
+            <label>{{book}}</label>
+        </div>
+
+        <div v-for="(value, key) in person">
+            <label>{{key}: {{value}}}</label>       //没有成功添加age属性
+        </div>
+        <label>{{username}}</label>
+        <button @click="updatelist">更新数组</button>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            books: ['python','Jave', 'PHP', 'C++'],
+            person:{
+                username:"jiajia"
+            }
+        },
+        methods: {
+            updatelist:function(){
+                // 直接赋值
+                // this.books = ['逻辑教育']
+                // this.person.username='xxx'
+                this.books.push("Redis"),        //将元素推到最后一位
+                this.books.pop(),                //弹出最后一个元素
+                this.books.shift()               //删除数组的第一个元素
+                // 向books第0个位置添加元素
+                this.books.splice(0,0,"金瓶梅")    //位置 替换原来的几个 添加数据
+                // 下标从0开始，删除2个元素
+                this.books.splice(0,2)
+                // 下标从0开始，替换2个元素
+                this.books.splice(0,2,'金瓶梅','骆驼祥子')
+
+                this.books.sort(function(x,y){
+                    a = Math.random()
+                    b = Math.random()
+                    return a-b
+                })
+                this.books.reverse()
+                // 视图更新注意事项
+                // this.book[0] = "jiajia"
+                Vue.set(this.books, 0, 'jiajia')    //books里面第一个数据修改为jiajia
+                this.person.username = '嘉佳'         //更改用户名
+                // this.person.age = '18'       //未成功
+                Vue.set(this.person, 'age', 18)
+            }
+        }
+    })
+</script>

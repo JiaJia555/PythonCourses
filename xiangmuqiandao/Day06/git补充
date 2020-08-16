@@ -1,0 +1,60 @@
+Beyond compare: 54:38破解版
+vim.git/config
+全局vim~/.gitconfig
+
+1.配置文件存放的三个位置
+1.1 项目/git/config           当前项目才管用，重启是没有意义的
+vim .git/config
+git config --local user.name 'JiaJia555'
+git config --local user.email '17xxxx@xx.com
+
+1.2 全局：~/.gitconfig
+vim ~/.gitconfig
+
+1.3 系统：/etc/.gitconfig
+cat /etc/gitconfig
+
+2. 免密登陆
+2.1 url
+原来的地址：https://github.com/WuPeiqi/dbhot.git
+修改的地址：https://用户名:密码@github.com/WuPeiqi/dbhot.git
+git remote add origin https://用户名：密码@github.com/WuPeiqi/dbhot.git
+git push origin master
+
+2.2 ssh
+/c/Users/shelleyfu/.ssh/id_rsa
+头像--settings--SSH and GPG keys--New SSH keys
+
+3. 忽略文件
+person/testA/dbhot/dev
+ls
+touch demo.init
+git status
+mkdir .gitignore
+ls
+cp demo.init .gitignore
+ls .gitignore
+ls
+git status
+rm -rf .gitignore/
+vim .gitignore      demo.init
+git status
+ls
+touch b.py
+git status
+vim .gitignore      *.py或者congig/文件夹
+git status
+mkdir conf
+cd config/
+touch a.py
+git status
+cd ..
+ls
+vim .gitignore          config/ *.py[c|a] 或者的意思 *.h[a|b]正则表达式
+git status
+
+4. github任务管理相关
+lgcoderjiajia/dbhot--issues--new issue
+wiki(说明文档)--create the first page--
+
+
