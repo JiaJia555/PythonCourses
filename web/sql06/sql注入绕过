@@ -1,0 +1,16 @@
+sql注入绕过手段
+1. 大小写绕过
+and And ANd     order by 123 Order BY 123
+
+2. 双写绕过
+and aandnd
+
+3.编码绕过
+可以利用URL编码工具,绕过SQL注入的过滤机制
+
+http://tool.chinaz.com/Tools/urlencode.aspx
+' 为27%
+4. 内联注释绕过
+在MySQL中内联注释中的内容可以被当做SQL语句执行
+
+/*!select*/ * from users;
